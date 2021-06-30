@@ -57,9 +57,17 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Account", icon: "mdi-account-box" },
-        { title: "Admin", icon: "mdi-gavel" },
+        { title: "Clientes", icon: "mdi-view-dashboard" },
+        { title: "Autores", icon: "mdi-account-box" },
+        { title: "Categorias", icon: "mdi-gavel" },
+        { title: "Noticias", icon: "mdi-gavel" },
+        { title: "Apuestas", icon: "mdi-gavel" },
+        { title: "Apuestas del cliente", icon: "mdi-gavel" },
+        { title: "Equipos", icon: "mdi-gavel" },
+        { title: "Seguimientos", icon: "mdi-gavel" },
+        { title: "Solicitudes de recarga", icon: "mdi-gavel" },
+        { title: "Contactos", icon: "mdi-gavel" },
+        { title: "Usuarios", icon: "mdi-gavel" },
       ],
     };
   },

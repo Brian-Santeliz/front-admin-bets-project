@@ -5,6 +5,7 @@ import {AUTENTICACION_TOKEN} from '@/utils/constante'
 import axios from 'axios';
 import router from '@/router/index' 
 Vue.use(Vuex);
+/* CREAR INITIAL STATE? */
 export default new Vuex.Store({
   state: {
     usuario: {},
@@ -43,11 +44,10 @@ export default new Vuex.Store({
         usuario,
       };
       localStorage.setItem(AUTENTICACION_TOKEN, payload);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + payload;
       context.commit('establecerToken', payload);
       context.commit('establecerUsuario', datosUsuario);
       context.commit('establecerAutenticado', true);
-      //establecer cabecera axios
-      /* INSTALAR PERSISTENCIA DE STORE */
     },  
     obtenerUsuario(context){
       const existeToken = localStorage.getItem(AUTENTICACION_TOKEN)
