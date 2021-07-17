@@ -46,7 +46,7 @@
                           rounded
                           color="primary accent-3"
                           dark
-                          >Iniciar Sesión</v-btn
+                          >Iniciar Sesión <v-icon>mdi-account-lock</v-icon></v-btn
                         >
                       </div>
                     </v-form>

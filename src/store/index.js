@@ -5,12 +5,12 @@ import {AUTENTICACION_TOKEN} from '@/utils/constante'
 import axios from 'axios';
 import router from '@/router/index' 
 Vue.use(Vuex);
-/* CREAR INITIAL STATE? */
 export default new Vuex.Store({
   state: {
     usuario: {},
     token: null,
     estaAutenticado: false,
+    esAdmin:false,
   },
   mutations: {
     establecerToken(state, payload) {
@@ -22,6 +22,9 @@ export default new Vuex.Store({
     establecerAutenticado(state, payload){
       state.estaAutenticado = payload
     },
+    establecerEsAdmin(state, payload){
+      state.esAdmin = payload
+    },
     resetearStore(state){
       state.token = null,
       state.usuario = {}
@@ -31,23 +34,25 @@ export default new Vuex.Store({
   actions: {
     logout(context){
       localStorage.removeItem(AUTENTICACION_TOKEN);
-      //PROBAR SI ASI SE ESTA ELIMINANDO LA CABECERA
       delete axios.defaults.headers.common['Authorization'];
       context.commit('resetearStore');
       router.push('/login')
     },
     establecerDatos(context, payload) {
-      const { id, nombre, usuario } = decodificarToken(payload);
+      const { id, nombre, usuario, rol } = decodificarToken(payload);
       const datosUsuario = {
         id,
         nombre,
         usuario,
+        rol
       };
+      const esAdmin = rol === "Administrador"
       localStorage.setItem(AUTENTICACION_TOKEN, payload);
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + payload;
       context.commit('establecerToken', payload);
       context.commit('establecerUsuario', datosUsuario);
       context.commit('establecerAutenticado', true);
+      context.commit('establecerEsAdmin', esAdmin)
     },  
     obtenerUsuario(context){
       const existeToken = localStorage.getItem(AUTENTICACION_TOKEN)
@@ -61,6 +66,12 @@ export default new Vuex.Store({
   getters:{
     nombreAdmin: store=>{
      return store.usuario.nombre
+   },
+    esAdmin: store=>{
+     return store.esAdmin
+   },
+    rolUsuario: store=>{
+     return store.usuario.rol
    }
   }
 });
